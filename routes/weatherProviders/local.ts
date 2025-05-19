@@ -132,7 +132,7 @@ function saveQueue() {
 	}
 }
 
-if ( process.env.WEATHER_PROVIDER === "local" && process.env.LOCAL_PERSISTENCE ) {
+if ( process.env.PWS_WEATHER_PROVIDER === "local" && process.env.LOCAL_PERSISTENCE ) {
 	if ( fs.existsSync( "observations.json" ) ) {
 		try {
 			queue = JSON.parse( fs.readFileSync( "observations.json", "utf8" ) );
