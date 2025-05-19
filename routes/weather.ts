@@ -185,18 +185,26 @@ export const getWeatherData = async function( req: express.Request, res: express
 		pws = {apiKey: adjustmentOptions.key};
 	}
 
-	let WEATHER_PROVIDER: WeatherProvider;
-	const provider: string = adjustmentOptions.provider;
- 	 if (typeof WEATHER_PROVIDERS[provider] === 'object') {
-  	  WEATHER_PROVIDER = WEATHER_PROVIDERS[provider];
-  	} else {
-   	 WEATHER_PROVIDER = WEATHER_PROVIDERS['Apple'];
-  	}
+	// WARN: hardcode to env.PWS_WEATHER_PROVIDER
+	const weatherProvider = PWS_WEATHER_PROVIDER;
+
+//	let weatherProvider: WeatherProvider;
+//	if( pws && pws.id ){
+//		weatherProvider = PWS_WEATHER_PROVIDER;
+//	}else{
+//		const provider: string = adjustmentOptions.provider;
+//		 if (typeof WEATHER_PROVIDERS[provider] === 'object') {
+//		  weatherProvider = WEATHER_PROVIDERS[provider];
+//		} else {
+//		 weatherProvider = WEATHER_PROVIDERS['Apple'];
+//		}
+//	}
+
 	// Continue with the weather request
 	const timeData: TimeData = getTimeData( coordinates );
 	let weatherData: WeatherData;
 	try {
-		weatherData = await WEATHER_PROVIDER.getWeatherData( coordinates, pws );
+		weatherData = await weatherProvider.getWeatherData( coordinates, pws );
 	} catch ( err ) {
 		res.send( "Error: " + err );
 		return;
@@ -283,18 +291,20 @@ export const getWateringData = async function( req: express.Request, res: expres
 		pws = {apiKey: adjustmentOptions.key};
 	}
 
-	let weatherProvider: WeatherProvider;
-	if( pws && pws.id ){
-		weatherProvider = PWS_WEATHER_PROVIDER;
-	}else{
-		const provider: string = adjustmentOptions.provider;
- 		 if (typeof WEATHER_PROVIDERS[provider] === 'object') {
-  		  weatherProvider = WEATHER_PROVIDERS[provider];
-  		} else {
-   		 weatherProvider = WEATHER_PROVIDERS['Apple'];
-  		}
-	}
+	// WARN: hardcode to env.PWS_WEATHER_PROVIDER
+	const weatherProvider = PWS_WEATHER_PROVIDER;
 
+//	let weatherProvider: WeatherProvider;
+//	if( pws && pws.id ){
+//		weatherProvider = PWS_WEATHER_PROVIDER;
+//	}else{
+//		const provider: string = adjustmentOptions.provider;
+//		 if (typeof WEATHER_PROVIDERS[provider] === 'object') {
+//		  weatherProvider = WEATHER_PROVIDERS[provider];
+//		} else {
+//		 weatherProvider = WEATHER_PROVIDERS['Apple'];
+//		}
+//	}
 
 	const data = {
 		scale:		undefined,
